@@ -1,0 +1,41 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+:root {
+    --primaryColor: #62DDBD;
+}
+
+.container {
+    width: 100%;
+    padding: 0px 25px;
+}
+
+body {
+    background-color: #FFFFFF;
+}
+
+/* Naviagtion Bar */
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0px;
+    background-color: #FF0000;
+}
+
+#navigation-bar-logo {
+    width: 50px;
+}
+
+.navigation-bar-link {
+    text-decoration: none;
+    font-family: "Barlow";
+}
+
+.navigation-bar-link:hover {
+    color: var(--primaryColor);
+}

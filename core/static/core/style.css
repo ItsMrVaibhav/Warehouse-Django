@@ -1,0 +1,15 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Hack";
+}
+
+.container {
+    width: 100%;
+    padding: 0px 25px;
+}
+
+#navigation-bar-logo {
+    width: 50px;
+}
