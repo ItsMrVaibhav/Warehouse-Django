@@ -36,7 +36,7 @@ class ProductMovement(models.Model):
     quantity = models.IntegerField()
 
     def __str__(self):
-        return f"{self.from_location.pk if self.from_location else '-'} --> {self.to_location.pk if self.to_location else '-'} | {self.product_id.name} ({self.product_id.pk}) | {self.quantity}"
+        return f"{self.from_location.pk if self.from_location else 'X'} --> {self.to_location.pk if self.to_location else 'X'} | {self.product_id.name} ({self.product_id.pk}) | {self.quantity}"
 
     class Meta:
         verbose_name = "ProductMovement"
