@@ -3,6 +3,15 @@ from django.contrib import messages
 from .models import Product, Location, ProductMovement
 from django.http import HttpResponseRedirect, JsonResponse
 
+def isValid(input):
+    if input not in [None, ""]:
+        if isinstance(input, int) or isinstance(input, float):
+            return input >= 0
+
+        return True
+
+    return False
+
 def getProduct(productID):
     """
     If the product exists, it returns the product, otherwise, None
@@ -37,16 +46,150 @@ def products(request):
     """
     A view to view all existing products
     """
+    if request.method == "POST":
+        # Fetching form data
+        productID = request.POST.get("productID", "").strip()
+        productName = request.POST.get("productName", "").strip()
+        productQuantity = int(request.POST.get("productQuantity", -1))
+        description = request.POST.get("productDescription", "").strip()
+        values = {}
+        error = False
+
+        # Validating form data
+        if productID is None or not isValid(productName):
+            messages.error(request, "Invalid product ID")
+            error = True
+        else:
+            values["productID"] = productID
+
+        if productName is None or not isValid(productName):
+            messages.error(request, "Invalid product name")
+            error = True
+        else:
+            values["productName"] = productName
+
+        if productQuantity is None or not isValid(productQuantity):
+            messages.error(request, "Invalid product quantity")
+            error = True
+        else:
+            values["productQuantity"] = productQuantity
+
+        if description is None or not isValid(description):
+            messages.error(request, "Invalid product description")
+            error = True
+        else:
+            values["description"] = description
+
+        if Product.objects.filter(pk = productID).exists():
+            messages.error(request, "Product ID aleardy exists! Enter a new product ID!")
+            error = True
+
+        if error:
+            products, movements = getProductsAndMovements()
+            return render(request, "core/products.html", {
+                "products": zip(products, movements),
+                "values": values
+            })
+
+        Product.objects.create(
+            product_id = productID,
+            name = productName,
+            quantity = productQuantity,
+            description = description
+        )
+        messages.success(request, "Product added successfully!")
+        return HttpResponseRedirect(f"/view-product/{productID}")
+    
+    products, movements = getProductsAndMovements()
     return render(request, "core/products.html", {
-        "products": Product.objects.all()
+        "products": zip(products, movements),
     })
+
+def getProductsAndMovements():
+    products = Product.objects.all()
+    movements = []
+
+    for product in products:
+        movements.append(product.movements.all().count())
+
+    return products, movements
+
+def getLocationsData():
+    """
+    A function to get information about all the locations
+    """
+    locations = Location.objects.all()
+    metrics = []
+
+    for location in locations:
+        metrics.append({
+            "sources": location.sources.all().count(),
+            "destinations": location.destinations.all().count()
+        })
+
+    return locations, metrics
 
 def locations(request):
     """
     A view to view all existing locations
     """
+    if request.method == "POST":
+        # Fetching form data
+        productID = request.POST.get("productID", "").strip()
+        productName = request.POST.get("productName", "").strip()
+        productQuantity = int(request.POST.get("productQuantity", -1))
+        description = request.POST.get("productDescription", "").strip()
+        values = {}
+        error = False
+
+        # Validating form data
+        if productID is None or not isValid(productName):
+            messages.error(request, "Invalid product ID")
+            error = True
+        else:
+            values["productID"] = productID
+
+        if productName is None or not isValid(productName):
+            messages.error(request, "Invalid product name")
+            error = True
+        else:
+            values["productName"] = productName
+
+        if productQuantity is None or not isValid(productQuantity):
+            messages.error(request, "Invalid product quantity")
+            error = True
+        else:
+            values["productQuantity"] = productQuantity
+
+        if description is None or not isValid(description):
+            messages.error(request, "Invalid product description")
+            error = True
+        else:
+            values["description"] = description
+
+        if Product.objects.filter(pk = productID).exists():
+            messages.error(request, "Product ID aleardy exists! Enter a new product ID!")
+            error = True
+
+        if error:
+            products, movements = getProductsAndMovements()
+            return render(request, "core/products.html", {
+                "products": zip(products, movements),
+                "values": values
+            })
+
+        Product.objects.create(
+            product_id = productID,
+            name = productName,
+            quantity = productQuantity,
+            description = description
+        )
+        messages.success(request, "Product added successfully!")
+        return HttpResponseRedirect(f"/view-product/{productID}")
+
+    locations, metrics = getLocationsData()
     return render(request, "core/locations.html", {
-        "locations": Location.objects.all()
+        "locations": zip(locations, metrics)
     })
 
 def productMovements(request):
@@ -56,24 +199,6 @@ def productMovements(request):
     return render(request, "core/product-movements.html", {
         "productMovements": ProductMovement.objects.all()
     })
-
-def addProduct(request):
-    """
-    A view to add a new product
-    """
-    if request.method == "POST":
-        productID = request.POST.get("productID", None)
-        productName = request.POST.get("productName", None)
-        productQuantity = request.POST.get("productQuantity", None)
-        product = Product.objects.create(
-            product_id = productID,
-            name = productName,
-            quantity = productQuantity
-        )
-        messages.success(request, "Product added successfully!")
-        return HttpResponseRedirect(f"/view-product/{productID}")
-    
-    return HttpResponseRedirect("/products/")
 
 def viewProduct(request, productID):
     """
@@ -85,8 +210,7 @@ def viewProduct(request, productID):
         messages.error(request, "Product doesn't exist!")
         return HttpResponseRedirect("/")
 
-    pass
-    
+    pass   
 
 def editProduct(request, productID):
     """

@@ -1,0 +1,112 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block topScripts %}
+{% endblock %}
+
+{% block title %}
+Locations
+{% endblock %}
+
+{% block body %}
+<div class="container flex-row">
+    <div id="left-panel">
+        {% include "core/home-sub-links.html" with locations="true" %}
+        <div class="card">
+            <div class="card-actions flex-row">
+                <button class="btn btn-success card-button w-100" onclick="addLocation(this)">Add Location</button>
+                <button class="btn btn-info card-button w-100">Print Locations</button>
+            </div>
+        </div>
+        <form action="" class="form {% if not values %} hide {% endif %}" id="locationForm" method="POST">
+            {% csrf_token %}
+            <div class="form-content">
+                <div class="form-body">
+                    <p class="form-title">Add Location</p>
+                    <p class="form-sub-title">Fill the following form to add a address. All fields are compulsory.</p>
+                    <div class="form-line"></div>
+                    <div class="form-group">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" name="address" class="form-input" value="{{ values.address }}" required  placeholder="Enter the address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="locationID" class="form-label">Location ID</label>
+                            <input type="text" name="locationID" class="form-input" value="{{ values.locationID }}" required placeholder="Enter the Location ID">
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="pincode" class="form-label">Pincode</label>
+                            <input type="number" name="pincode" class="form-input" value="{{ values.pincode }}" required  placeholder="Enter the pincode">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" name="city" class="form-input" value="{{ values.city }}" required placeholder="Enter the city">
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="state" class="form-label">State</label>
+                            <input type="number" name="state" class="form-input" value="{{ values.state }}" required  placeholder="Enter the state">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" name="country" class="form-input" value="{{ values.country }}" required  placeholder="Enter the country">
+                    </div>
+                    {% csrf_token %}
+					<input type="submit" value="Add Location" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+        <div class="table">
+            <p class="table-title">Locations</p>
+            <p class="table-sub-title">Following are the registered locations</p>
+            <div class="table-line"></div>
+            <form>
+                <div class="form-group mb-0">
+                    <label class="form-label">Search Here</label>
+                    <input type="text" onkeyup="locationsSearch(this)" class="form-input" placeholder="Search for locations here">
+                </div>
+            </form>
+            <div class="table-cards" id="products">
+                {% for location, metric in locations %}
+                    <div class="table-card location">
+                        <div class="table-card-content">
+                            <p class="table-card-title">{{ location.name }}</p>
+                            <div class="table-card-metrics">
+                                <p class="table-card-metric">Created: {{ location.dateCreated|date:"jS F, Y (h:i A)" }}</p>
+                                <p class="table-card-metric">Last Modified: {{ location.dateModified|date:"jS F, Y (h:i A)" }}</p>
+                            </div>
+                            <div class="table-card-metrics">
+                                <p class="table-card-metric">Sources: {{ metric.sources }}</p>
+                                <p class="table-card-metric">Destinations: {{ metric.destinations }}</p>
+                            </div>
+                            <div class="table-line"></div>
+                            <p class="table-text">{{ location.address }}</p>
+                            <p class="table-text">{{ location.city }}, {{ location.state }}, {{ location.pincode }}, {{ location.country }}</p>
+                            <div class="table-line"></div>
+                            <div class="table-card-actions">
+                                <a href="" class="btn btn-success table-card-button w-100">View</a>
+                                <a href="" class="btn btn-info table-card-button w-100">Edit</a>
+                                <a href="" class="btn table-card-button btn-danger w-100">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="right-panel">
+
+    </div>
+</div>
+{% endblock %}
+
+{% block bottomScripts %}
+<script defer src="{% static 'core/javascript/locations.js' %}"></script>
+{% endblock %}

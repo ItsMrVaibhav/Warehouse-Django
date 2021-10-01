@@ -16,6 +16,18 @@
 </head>
 <body>
     <div class="container">
+        <div id="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">
+                        <p class="message-description">{{ message }}</p>            
+                        <img src="{% static 'core/images/cross.png' %}" alt="" onclick="this.closest('.message').remove();">
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
         <nav>
             <div id="navigation-bar-logo-space">
                 <a href="/">

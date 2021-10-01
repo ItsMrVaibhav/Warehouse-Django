@@ -13,6 +13,7 @@ class Product(models.Model):
 
 class Location(models.Model):
     location_id = models.CharField(max_length = 100, primary_key = True)
+    name = models.CharField(max_length = 250)
     address = models.CharField(max_length = 250)
     pincode = models.CharField(max_length = 6)
     city = models.CharField(max_length = 100)
