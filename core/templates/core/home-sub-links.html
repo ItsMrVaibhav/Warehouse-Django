@@ -1,5 +1,5 @@
 <div class="sub-links">
-    <a href="" class="sub-link {% if home == 'true' %} active-sub-link {% endif %}">Overview</a>
+    <a href="{% url 'core:index' %}" class="sub-link {% if index == 'true' %} active-sub-link {% endif %}">Overview</a>
     <a href="{% url 'core:products' %}" class="sub-link {% if products == 'true' %} active-sub-link {% endif %}">Products</a>
     <a href="{% url 'core:locations' %}" class="sub-link {% if locations == 'true' %} active-sub-link {% endif %}">Locations</a>
     <a href="{% url 'core:productMovements' %}" class="sub-link {% if productMovements == 'true' %} active-sub-link {% endif %}">Product Movements</a>

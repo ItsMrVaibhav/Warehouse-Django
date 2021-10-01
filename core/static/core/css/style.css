@@ -39,6 +39,10 @@ body {
     background-color: #F8F9FD;
 }
 
+.d-block {
+    display: block;
+}
+
 .link {
     color: var(--primaryColour);
     font-weight: 600;
@@ -56,6 +60,10 @@ body {
 
 .mb-0 {
     margin-bottom: 0px !important;
+}
+
+.mb-5 {
+    margin-bottom: 5px !important;
 }
 
 .mt-20 {
@@ -82,7 +90,7 @@ body {
     max-height: 100vh;
     max-width: 750px;
     width: 100%;
-    padding: 25px;
+    margin: 25px;
 }
 
 .message {
@@ -94,7 +102,7 @@ body {
     margin-bottom: 15px;
     padding: 10px;
     width: 100%;
-    box-shadow: 0px 0px 15px 0px #DEDEDE;
+    box-shadow: 0px 0px 5px 0px #DEDEDE;
     transform: translateX(2500px);
     border-radius: 5px;
     animation: toastMessageAnimation 1s 1 forwards;
@@ -549,6 +557,14 @@ textarea {
     color: #000000;
 }
 
+.table-card-heading {
+    display: block;
+    font-size: 20px;
+    font-family: "Barlow";
+    margin-bottom: 10px;
+    color: #000000;
+}
+
 .table-card-metrics {
     display: flex;
     align-items: center;
@@ -619,7 +635,7 @@ nav {
 }
 
 .sub-link:hover {
-    color: red;
+    color: var(--primaryColour);
 }
 
 .active-sub-link {

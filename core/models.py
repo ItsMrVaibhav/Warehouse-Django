@@ -30,11 +30,12 @@ class Location(models.Model):
 
 class ProductMovement(models.Model):
     movement_id = models.CharField(max_length = 100, primary_key = True)
-    timestamp = models.DateTimeField(auto_now_add = True)
     from_location = models.ForeignKey(Location, on_delete = models.CASCADE, null = True, related_name = "sources")
     to_location = models.ForeignKey(Location, on_delete = models.CASCADE, null = True, related_name = "destinations")
     product_id = models.ForeignKey(Product, on_delete = models.CASCADE, related_name = "movements")
     quantity = models.IntegerField()
+    dateCreated = models.DateTimeField(auto_now_add = True)
+    dateModified = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         return f"{self.from_location.pk if self.from_location else 'X'} --> {self.to_location.pk if self.to_location else 'X'} | {self.product_id.name} ({self.product_id.pk}) | {self.quantity}"

@@ -14,39 +14,8 @@ Home
 {% block body %}
 <div class="container flex-row">
     <div id="left-panel">
-        {% include "core/home-sub-links.html" %}
-        <form action="" class="form" id="login-form" method="POST">
-            {% csrf_token %}
-            <div class="form-content">
-                <div class="form-body">
-                    <p class="form-title">User Login</p>
-                    <p class="form-sub-title">You are about to signup for magic</p>
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" name="username" class="form-input" required placeholder="Enter your username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-input" required  placeholder="Enter your password">
-                        {% if error %}
-                            <p class="form-input-error">{{ error }}</p>
-                        {% endif %}
-                    </div>
-                    <div class="form-group checkbox">
-                        <label for="remember-me" class="form-label">Remember Me</label>
-                        <div class="form-checkbox">
-                            <input type="checkbox" name="remember-me" class="form-checkbox-input">
-                            <div class="slider"></div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="next" value="{{ request.GET.next }}">
-                    <input type="submit" name="submit" class="btn large" value="Login">
-                    <div class="form-footer">
-                        <a href="" class="link form-text">Not registered yet? Register</a>
-                    </div>
-                </div>
-            </div>
-        </form>
+        {% include "core/home-sub-links.html" with index="true" %}
+        
     </div>
     <div id="right-panel">
 

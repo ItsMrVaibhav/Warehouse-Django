@@ -197,7 +197,9 @@ def productMovements(request):
     A view to view all existing product movements
     """
     return render(request, "core/product-movements.html", {
-        "productMovements": ProductMovement.objects.all()
+        "productMovements": ProductMovement.objects.all(),
+        "locations": Location.objects.all(),
+        "products": Product.objects.all()
     })
 
 def viewProduct(request, productID):
