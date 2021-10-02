@@ -17,6 +17,7 @@ For testing purposes, sample data can be created using the command `python manag
 4. Run the server using `python manage.py runserver`
 
 ## Sample Video
+[![](https://youtu.be/JzWdKGz9rJg)](https://www.youtube.com/watch?v=VID)
 
 ## Screenshots
 ### Add Product
