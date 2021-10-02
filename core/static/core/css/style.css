@@ -18,21 +18,33 @@
     padding: 0px 25px;
 }
 
+.line {
+    width: 100%;
+    border-bottom: 1px solid #AAAAAA;
+    margin: 15px 0px;
+}
+
+
 .flex-row {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
 }
 
 .flex-column {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 .align-items-center {
-    align-items: center;
+    align-items: center !important;
 }
 
 .justify-content-center {
-    justify-content: center;
+    justify-content: center !important;
+}
+
+.justify-content-space-between {
+    justify-content: space-between !important;
 }
 
 body {
@@ -40,13 +52,17 @@ body {
 }
 
 .d-block {
-    display: block;
+    display: block !important;
 }
 
 .link {
     color: var(--primaryColour);
     font-weight: 600;
     cursor: pointer;
+}
+
+.me-5 {
+    margin-right: 5px !important;
 }
 
 .link:hover {
@@ -56,6 +72,10 @@ body {
 .w-100 {
     display: block;
     width: 100% !important;
+}
+
+.mt-0 {
+    margin-top: 0px !important;
 }
 
 .mb-0 {
@@ -129,28 +149,6 @@ body {
         transform: translateY(0px);
         opacity: 100%;
     }
-}
-
-/* Card */
-
-.card {
-    position: relative;
-    background-color: #FFFFFF;
-    border: 1px solid #DEDEDE;
-    border-radius: 5px;
-    margin: 25px 0px;
-    width: 100%;
-    padding: 20px;
-}
-
-.card-actions {
-    display: flex;
-    padding-left: 5px;
-}
-
-.card-button {
-    margin-right: 5px;
-    text-align: center;
 }
 
 /* Buttons */
@@ -300,39 +298,6 @@ body {
     position: relative;
 }
 
-.form-messages {
-    padding-bottom: 10px;
-}
-
-.form-success-message, .form-error-message {
-    box-sizing: border-box;
-    margin: 0px 20px;
-    margin-bottom: 10px;
-    padding: 10px;    
-    display: flex;
-    align-items: center;
-    width: calc(100% - 40px);
-    border-radius: 3px;
-}
-
-.form-error-message {
-    background-color: #F5B7B1;
-}
-
-.form-success-message {
-    background-color: #ABEBC6;
-}
-
-.form-message-cross {
-    height: 10px;
-    cursor: pointer;
-    margin-right: 15px;
-}
-
-.form-message {
-    font-size: 14px;
-}
-
 .checkbox label {
     white-space: nowrap;
 }
@@ -392,7 +357,7 @@ body {
     font-size: 30px;
     font-family: "Barlow Condensed";
     margin-bottom: 5px;
-    color: #21333E;
+    color: #000000;
 }
 
 .form-line {
@@ -483,6 +448,7 @@ textarea {
     margin: 10px 0 25px 0;
     display: inline-block;
     border: none;
+    font-size: 16px;
     border-bottom: 1px solid #000000;
     outline: none;
     background: #F7F7F7;
@@ -523,7 +489,7 @@ textarea {
     font-size: 30px;
     font-family: "Barlow Condensed";
     margin-bottom: 5px;
-    color: #21333E;
+    color: #000000;
 }
 
 .table-sub-title {
@@ -574,8 +540,23 @@ textarea {
 
 .table-card-metric {
     display: block;
-    font-size: 15px;
+    font-size: 16px;
     font-family: "Barlow";
+}
+
+.table-card-metric-cell, .table-card-metric-cell-head {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 7px;
+    text-align: center;
+    background-color: #FFFFFF;
+    margin: 0px 5px;
+}
+
+.table-card-metric-cell-head {
+    background-color: var(--primaryColour);
+    color: #FFFFFF;
 }
 
 .table-card-actions {
@@ -585,6 +566,79 @@ textarea {
 
 .table-card-button {
     margin: 0px 5px;
+    text-align: center;
+}
+
+/* Card */
+
+.card {
+    position: relative;
+    background-color: #FFFFFF;
+    border: 1px solid #DEDEDE;
+    border-radius: 5px;
+    margin: 25px 0px;
+    width: 100%;
+    padding: 20px;
+}
+
+.card-title {
+    display: block;
+    font-size: 30px;
+    font-family: "Barlow";
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+.card-description {
+    font-size: 18px;
+    font-family: "Barlow";
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+.card-heading {
+    display: block;
+    font-size: 20px;
+    font-family: "Barlow";
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.card-metrics {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-metric, .card-text {
+    display: block;
+    font-size: 16px;
+    font-family: "Barlow";
+    margin-top: 5px;
+}
+
+.card-metric-cell, .card-metric-cell-head {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 7px;
+    text-align: center;
+    background-color: #FFFFFF;
+    margin: 0px 5px;
+}
+
+.card-metric-cell-head {
+    background-color: var(--primaryColour);
+    color: #FFFFFF;
+}
+
+.card-actions {
+    display: flex;
+    margin-right: -5px;
+}
+
+.card-button {
+    margin-right: 5px !important;
+    display: block;
     text-align: center;
 }
 

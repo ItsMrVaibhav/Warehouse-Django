@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block topScripts %}
+{% endblock %}
+
+{% block title %}
+Product Movement
+{% endblock %}
+
+{% block body %}
+<div class="container flex-row">
+    <div id="left-panel">
+        {% include "core/home-sub-links.html" %}
+        <div class="card">
+            <div class="card-body">
+                <div class="card-metrics">
+                    <p class="card-metric mt-0">Created: {{ movement.dateCreated|date:"jS F, Y (h:i A)" }}</p>
+                    <p class="card-metric">Last Modified: {{ movement.dateModified|date:"jS F, Y (h:i A)" }}</p>
+                </div>
+                <div class="line"></div>
+                <div class="card-metrics">
+                    <p class="card-metric">Product: <a href="{% url 'core:viewProduct' movement.product_id.pk %}" class="link" id="productName">{{ movement.product_id.name }}</a></p>
+                    <p class="card-metric">Quantity: {{ movement.quantity }}</p>
+                    <p class="card-metric">Type: {{ movement.get_type_display }}</p>
+                </div>
+                <div class="line"></div>
+                <p class="card-heading">From:</p>
+                {% if movement.from_location %}
+                    <p class="card-text"><a href="{% url 'core:viewLocation' movement.from_location.pk %}" class="link mb-5 d-block">{{ movement.from_location.name }}</a></p>
+                    <p class="card-text">{{ movement.from_location.address }}</p>
+                    <p class="card-text">{{ movement.from_location.city }}, {{ movement.from_location.state }}, {{ movement.from_location.pincode }}, {{ movement.from_location.country }}</p>
+                {% else %}
+                    <p class="card-text">None</p>
+                {% endif %}
+                <div class="line"></div>
+                <p class="card-heading">To:</p>
+                {% if movement.to_location %}
+                    <p class="card-text"><a href="{% url 'core:viewLocation' movement.to_location.pk %}" class="link mb-5 d-block">{{ movement.to_location.name }}</a></p>
+                    <p class="card-text">{{ movement.to_location.address }}</p>
+                    <p class="card-text">{{ movement.to_location.city }}, {{ movement.to_location.state }}, {{ movement.to_location.pincode }}, {{ movement.to_location.country }}</p>
+                {% else %}
+                    <p class="card-text">None</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="right-panel">
+
+    </div>
+</div>
+{% endblock %}
+
+{% block bottomScripts %}
+{% endblock %}

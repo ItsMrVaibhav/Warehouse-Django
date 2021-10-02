@@ -1,0 +1,87 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block topScripts %}
+{% endblock %}
+
+{% block title %}
+Product Movement
+{% endblock %}
+
+{% block body %}
+<div class="container flex-row">
+    <div id="left-panel">
+        {% include "core/home-sub-links.html" %}
+        <form action="" class="form" id="productMovementForm" method="POST">
+            {% csrf_token %}
+            <div class="form-content">
+                <div class="form-body">
+                    <p class="form-title">Add Product Movement</p>
+                    <p class="form-sub-title">Fill the following form to add a product movement. All fields are compulsory.</p>
+                    <div class="form-line"></div>
+                    <div class="form-group">
+                        <label for="movementID" class="form-label">Movement ID</label>
+                        <input type="text" name="movementID" class="form-input" value="{{ values.movementID }}" required placeholder="Enter the Movement ID">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromLocation" class="form-label">From Location</label>
+                            <select name="fromLocation" class="form-input" onchange="updateProductsList(this)">
+                                <option selected value="none">None</option>
+                                {% for location in locations %}
+                                    <option value="{{ location.pk }}">{{ location.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="toLocation" class="form-label">To Location</label>
+                            <select name="toLocation" class="form-input">
+                                <option selected value="none">None</option>
+                                {% for location in locations %}
+                                    <option value="{{ location.pk }}">{{ location.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product" class="form-label">Products</label>
+                            <select name="product" data-location="none" class="form-input locations-products">
+                                {% for product in products %}
+                                    <option value="{{ product.pk }}">{{ product.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% for key, location in data.items %}
+                            <div class="form-group hide">
+                                <label for="product" class="form-label">{{ location.location.name }} Products</label>
+                                <select name="product" data-location="{{ location.location.pk }}" class="form-input locations-products" disabled>
+                                    {% for key, product in location.products.items %}
+                                        <option value="{{ product.id }}">{{ product.name }} ({{ product.quantity }} units)</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endfor %}
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" name="quantity" class="form-input" value="{{ values.quantity }}" required  placeholder="Enter the quantity">
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <input type="submit" value="Add Product Movement" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="right-panel">
+
+    </div>
+</div>
+{% endblock %}
+{% block bottomScripts %}
+{% endblock %}

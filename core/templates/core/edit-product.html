@@ -1,0 +1,50 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block topScripts %}
+{% endblock %}
+
+{% block title %}
+{{ product.name }} | Products
+{% endblock %}
+
+{% block body %}
+<div class="container flex-row">
+    <div id="left-panel">
+        {% include "core/home-sub-links.html" %}
+        <form action="" class="form" id="productForm" method="POST">
+            {% csrf_token %}
+            <div class="form-content">
+                <div class="form-body">
+                    <p class="form-title">Edit Product</p>
+                    <p class="form-sub-title">Edit the following form to edit a product. All fields are compulsory.</p>
+                    <div class="form-line"></div>
+                    <div class="form-group">
+                        <label for="productName" class="form-label">Product Name</label>
+                        <input type="text" name="productName" class="form-input" value="{{ product.name }}" required  placeholder="Enter the product name">
+                    </div>
+                    <div class="form-group">
+                        <label for="productID" class="form-label">Product ID</label>
+                        <input type="text" name="productID" class="form-input form-input-disabled" disabled value="{{ product.product_id }}" required placeholder="Enter the Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="productQuantity" class="form-label">Product Description</label>
+                        <textarea name="productDescription" class="form-input" placeholder="Enter the product description">{{ product.description }}</textarea>
+                    </div>
+                    {% csrf_token %}
+                    <input type="submit" value="Save Changes" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="right-panel">
+
+    </div>
+</div>
+{% endblock %}
+
+{% block bottomScripts %}
+{% endblock %}

@@ -18,7 +18,6 @@ Locations
         <div class="card">
             <div class="card-actions flex-row">
                 <button class="btn btn-success card-button w-100" onclick="addLocation(this)">Add Location</button>
-                <button class="btn btn-info card-button w-100">Print Locations</button>
             </div>
         </div>
         <form action="" class="form {% if not values %} hide {% endif %}" id="locationForm" method="POST">
@@ -39,24 +38,31 @@ Locations
                         </div>
                         <div class="form-row-gap"></div>
                         <div class="form-group">
-                            <label for="pincode" class="form-label">Pincode</label>
-                            <input type="number" name="pincode" class="form-input" value="{{ values.pincode }}" required  placeholder="Enter the pincode">
+                            <label for="locationName" class="form-label">Location Name</label>
+                            <input type="text" name="locationName" class="form-input" value="{{ values.locationName }}" required  placeholder="Enter a location name">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" name="city" class="form-input" value="{{ values.city }}" required placeholder="Enter the city">
+                            <label for="pincode" class="form-label">Pincode</label>
+                            <input type="text" name="pincode" class="form-input" value="{{ values.pincode }}" required  placeholder="Enter the pincode">
                         </div>
                         <div class="form-row-gap"></div>
                         <div class="form-group">
-                            <label for="state" class="form-label">State</label>
-                            <input type="number" name="state" class="form-input" value="{{ values.state }}" required  placeholder="Enter the state">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" name="city" class="form-input" value="{{ values.city }}" required placeholder="Enter the city">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" name="country" class="form-input" value="{{ values.country }}" required  placeholder="Enter the country">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state" class="form-label">State</label>
+                            <input type="text" name="state" class="form-input" value="{{ values.state }}" required  placeholder="Enter the state">
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" name="country" class="form-input" value="{{ values.country }}" required  placeholder="Enter the country">
+                        </div>
                     </div>
                     {% csrf_token %}
 					<input type="submit" value="Add Location" class="btn btn-success">
@@ -91,9 +97,8 @@ Locations
                             <p class="table-text">{{ location.city }}, {{ location.state }}, {{ location.pincode }}, {{ location.country }}</p>
                             <div class="table-line"></div>
                             <div class="table-card-actions">
-                                <a href="" class="btn btn-success table-card-button w-100">View</a>
-                                <a href="" class="btn btn-info table-card-button w-100">Edit</a>
-                                <a href="" class="btn table-card-button btn-danger w-100">Delete</a>
+                                <a href="{% url 'core:viewLocation' location.pk %}" class="btn btn-success table-card-button w-100">View</a>
+                                <a href="{% url 'core:editLocation' location.pk %}" class="btn btn-info table-card-button w-100">Edit</a>
                             </div>
                         </div>
                     </div>

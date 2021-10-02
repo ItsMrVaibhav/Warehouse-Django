@@ -18,7 +18,6 @@ Products
         <div class="card">
             <div class="card-actions flex-row">
                 <button class="btn btn-success card-button w-100" onclick="addProduct(this)">Add Product</button>
-                <button class="btn btn-info card-button w-100">Print Products</button>
             </div>
         </div>
         <form action="" class="form {% if not values %} hide {% endif %}" id="productForm" method="POST">
@@ -32,16 +31,9 @@ Products
                         <label for="productName" class="form-label">Product Name</label>
                         <input type="text" name="productName" class="form-input" value="{{ values.productName }}" required  placeholder="Enter the product name">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="productID" class="form-label">Product ID</label>
-                            <input type="text" name="productID" class="form-input" value="{{ values.productID }}" required placeholder="Enter the Product ID">
-                        </div>
-                        <div class="form-row-gap"></div>
-                        <div class="form-group">
-                            <label for="productQuantity" class="form-label">Product Quantity</label>
-                            <input type="number" name="productQuantity" class="form-input" value="{{ values.productQuantity }}" required  placeholder="Enter the product quantity">
-                        </div>
+                    <div class="form-group">
+                        <label for="productID" class="form-label">Product ID</label>
+                        <input type="text" name="productID" class="form-input" value="{{ values.productID }}" required placeholder="Enter the Product ID">
                     </div>
                     <div class="form-group">
                         <label for="productQuantity" class="form-label">Product Description</label>
@@ -70,19 +62,15 @@ Products
                             <div class="table-card-metrics">
                                 <p class="table-card-metric">Created: {{ p.dateCreated|date:"jS F, Y (h:i A)" }}</p>
                                 <p class="table-card-metric">Last Modified: {{ p.dateModified|date:"jS F, Y (h:i A)" }}</p>
-                            </div>
-                            <div class="table-card-metrics">
-                                <p class="table-card-metric">Quantity: {{ p.quantity }}</p>
                                 <p class="table-card-metric">Movements: {{ movement }}</p>
                             </div>
                             <div class="table-line hide table-card-description-line"></div>
                             <p class="table-card-description hide">{{ p.description }}</p>
                             <div class="table-line"></div>      
                             <div class="table-card-actions">
-                                <a href="" class="btn btn-success table-card-button w-100">View</a>
+                                <a href="{% url 'core:viewProduct' p.pk %}" class="btn btn-success table-card-button w-100">View</a>
                                 <button class="btn btn-info table-card-button w-100" onclick="toggleTableDescription(this)">Show Description</button>
-                                <a href="" class="btn btn-info table-card-button w-100">Edit</a>
-                                <a href="" class="btn table-card-button btn-danger w-100">Delete</a>
+                                <a href="{% url 'core:editProduct' p.pk %}" class="btn btn-info table-card-button w-100">Edit</a>
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,6 @@ Product Locations
         <div class="card">
             <div class="card-actions flex-row">
                 <button class="btn btn-success card-button w-100" onclick="addProductMovement(this)">Add Product Movement</button>
-                <button class="btn btn-info card-button w-100">Print Product Movements</button>
             </div>
         </div>
         <form action="" class="form {% if not values %} hide {% endif %}" id="productMovementForm" method="POST">
@@ -35,8 +34,8 @@ Product Locations
                     <div class="form-row">
                         <div class="form-group">
                             <label for="fromLocation" class="form-label">From Location</label>
-                            <select name="fromLocation" class="form-input">
-                                <option value="None">None</option>
+                            <select name="fromLocation" class="form-input" onchange="updateProductsList(this)">
+                                <option selected value="none">None</option>
                                 {% for location in locations %}
                                     <option value="{{ location.pk }}">{{ location.name }}</option>
                                 {% endfor %}
@@ -46,7 +45,7 @@ Product Locations
                         <div class="form-group">
                             <label for="toLocation" class="form-label">To Location</label>
                             <select name="toLocation" class="form-input">
-                                <option value="None">None</option>
+                                <option selected value="none">None</option>
                                 {% for location in locations %}
                                     <option value="{{ location.pk }}">{{ location.name }}</option>
                                 {% endfor %}
@@ -55,16 +54,26 @@ Product Locations
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="product" class="form-label">Product</label>
-                            <select name="product" class="form-input">
+                            <label for="product" class="form-label">Products</label>
+                            <select name="product" data-location="none" class="form-input locations-products">
                                 {% for product in products %}
-                                    <option value="{{ product.pk }}">{{ product.name }} ({{ product.quantity }} units)</option>
+                                    <option value="{{ product.pk }}">{{ product.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
+                        {% for key, location in data.items %}
+                            <div class="form-group hide">
+                                <label for="product" class="form-label">{{ location.location.name }} Products</label>
+                                <select name="product" data-location="{{ location.location.pk }}" class="form-input locations-products" disabled>
+                                    {% for key, product in location.products.items %}
+                                        <option value="{{ product.id }}">{{ product.name }} ({{ product.quantity }} units)</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endfor %}
                         <div class="form-row-gap"></div>
                         <div class="form-group">
-                            <label for="quantity" class="form-label">State</label>
+                            <label for="quantity" class="form-label">Quantity</label>
                             <input type="number" name="quantity" class="form-input" value="{{ values.quantity }}" required  placeholder="Enter the quantity">
                         </div>
                     </div>
@@ -94,6 +103,7 @@ Product Locations
                             <div class="table-card-metrics">
                                 <p class="table-card-metric">Product: <a href="{% url 'core:viewProduct' pl.product_id.pk %}" class="link" id="productName">{{ pl.product_id.name }}</a></p>
                                 <p class="table-card-metric">Quantity: {{ pl.quantity }}</p>
+                                <p class="table-card-metric">Type: {{ pl.get_type_display }}</p>
                             </div>
                             <div class="table-line"></div>
                             <p class="table-card-heading">From:</p>
@@ -115,9 +125,8 @@ Product Locations
                             {% endif %}
                             <div class="table-line"></div>
                             <div class="table-card-actions">
-                                <a href="" class="btn btn-success table-card-button w-100">View</a>
-                                <a href="" class="btn btn-info table-card-button w-100">Edit</a>
-                                <a href="" class="btn table-card-button btn-danger w-100">Delete</a>
+                                <a href="{% url 'core:viewProductMovement' pl.pk %}" class="btn btn-success table-card-button w-100">View</a>
+                                <a href="{% url 'core:editProductMovement' pl.pk %}" class="btn btn-info table-card-button w-100">Edit</a>
                             </div>
                         </div>
                     </div>

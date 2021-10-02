@@ -1,0 +1,54 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block topScripts %}
+{% endblock %}
+
+{% block title %}
+{{ location.name }} | Locations
+{% endblock %}
+
+{% block body %}
+<div class="container flex-row">
+    <div id="left-panel">
+        {% include "core/home-sub-links.html" %}
+
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">{{ location.name }}</p>
+                <div class="line"></div>
+                <p class="card-text">{{ location.address }}</p>
+                <p class="card-text">{{ location.city }}, {{ location.state }}, {{ location.pincode }}, {{ location.country }}</p>
+                <div class="line"></div>
+                <div class="card-metrics">
+                    <p class="mt-0 card-metric">Sources (From): {{ metrics.sources }}</p>
+                    <p class="card-metric">Destinations (To): {{ metrics.destinations }}</p>
+                </div>
+                <div class="line"></div>
+                <div class="card-metrics">
+                    <p class="card-metric mt-0">Created: {{ location.dateCreated|date:"jS F, Y (h:i A)" }}</p>
+                    <p class="card-metric">Last Modified: {{ location.dateModified|date:"jS F, Y (h:i A)" }}</p>
+                    <p class="card-metric">Movements: {{ movement }}</p>
+                </div>
+                <div class="line"></div>
+                <div class="card-actions">
+                    <a href="{% url 'core:editLocation' location.pk %}" class="btn btn-info card-button w-100">Edit</a>
+                    <form action="{% url 'core:deleteLocation' location.pk %}" class="w-100 me-5" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" class="btn card-button btn-danger w-100">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right-panel">
+
+    </div>
+</div>
+{% endblock %}
+
+{% block bottomScripts %}
+{% endblock %}

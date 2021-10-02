@@ -1,0 +1,75 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block topScripts %}
+{% endblock %}
+
+{% block title %}
+{{ location.name }} | Locations
+{% endblock %}
+
+{% block body %}
+<div class="container flex-row">
+    <div id="left-panel">
+        {% include "core/home-sub-links.html" %}
+        <form action="" class="form" id="locationForm" method="POST">
+            {% csrf_token %}
+            <div class="form-content">
+                <div class="form-body">
+                    <p class="form-title">Edit Location</p>
+                    <p class="form-sub-title">Edit the following form to edit a address. All fields are compulsory.</p>
+                    <div class="form-line"></div>
+                    <div class="form-group">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" name="address" class="form-input" value="{{ location.address }}" required  placeholder="Enter the address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="locationID" class="form-label">Location ID</label>
+                            <input type="text" name="locationID" class="form-input form-input-disabled" disabled value="{{ location.location_id }}" required placeholder="Enter the Location ID">
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="locationName" class="form-label">Location Name</label>
+                            <input type="text" name="locationName" class="form-input" value="{{ location.name }}" required  placeholder="Enter a location name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pincode" class="form-label">Pincode</label>
+                            <input type="text" name="pincode" class="form-input" value="{{ location.pincode }}" required  placeholder="Enter the pincode">
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" name="city" class="form-input" value="{{ location.city }}" required placeholder="Enter the city">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state" class="form-label">State</label>
+                            <input type="text" name="state" class="form-input" value="{{ location.state }}" required  placeholder="Enter the state">
+                        </div>
+                        <div class="form-row-gap"></div>
+                        <div class="form-group">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" name="country" class="form-input" value="{{ location.country }}" required  placeholder="Enter the country">
+                        </div>
+                    </div>
+                    {% csrf_token %}
+					<input type="submit" value="Save Changes" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="right-panel">
+
+    </div>
+</div>
+{% endblock %}
+
+{% block bottomScripts %}
+{% endblock %}

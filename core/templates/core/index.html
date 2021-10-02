@@ -15,7 +15,45 @@ Home
 <div class="container flex-row">
     <div id="left-panel">
         {% include "core/home-sub-links.html" with index="true" %}
-        
+        <div class="table">
+            <p class="table-title">Locations and Products Balance</p>
+            <p class="table-sub-title">Following is the list of locations and their products</p>
+            <div class="table-line"></div>
+            <form>
+                <div class="form-group mb-0">
+                    <label class="form-label">Search Here</label>
+                    <input type="text" onkeyup="productsSearch(this)" class="form-input" placeholder="Search for product here">
+                </div>
+            </form>
+            <div class="table-cards" id="products">
+                {% for id, location in data.items %}
+                    <div class="table-card location">
+                        <div class="table-card-content">
+                            <p class="table-card-title">{{ location.location.name }}</p>
+                            <p class="table-text">{{ location.location.address }}</p>
+                            <p class="table-text">{{ location.location.city }}, {{ location.location.state }}, {{ location.location.pincode }}, {{ location.location.country }}</p>
+                            <div class="table-line"></div>
+                            {% if location.products|length > 0 %}
+                                <div class="table-card-metrics">
+                                    <p class="table-card-metric-cell-head">Product</p>
+                                    <p class="table-card-metric-cell-head">Quantity</p>
+                                </div>
+                            {% endif %}
+                            {% for id, product in location.products.items %}
+                                <div class="table-card-metrics product">
+                                    <p class="table-card-metric-cell product-name">{{ product.name }}</p>
+                                    <p class="table-card-metric-cell product-quantity">{{ product.quantity }}</p>
+                                </div>
+                            {% empty %}
+                                <div class="table-card-metrics product">
+                                    <p class="table-card-metric-cell product-name">No data available</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     <div id="right-panel">
 
@@ -24,4 +62,5 @@ Home
 {% endblock %}
 
 {% block bottomScripts %}
+<script defer src="{% static 'core/javascript/home.js' %}"></script>
 {% endblock %}
