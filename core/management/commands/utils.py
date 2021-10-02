@@ -23,6 +23,7 @@ def createLocations():
         id = str(int(id) + 1)
         Location.objects.create(
             location_id = id,
+            name = fake.company(),
             address = fake.address(),
             pincode = fake.postcode(),
             city = fake.city(),
@@ -51,7 +52,6 @@ def createProducts():
         Product.objects.create(
             product_id = id,
             name = fake.company(),
-            quantity = random.randint(1, 25),
             description = fake.paragraph(nb_sentences = random.randint(5, 15))
         )
         print(f"Status: {((i + 1) / count) * 100}")

@@ -5,6 +5,5 @@ class Command(BaseCommand):
     help = "Generate dummy data"
 
     def handle(self, *args, **kwargs):
-        createLocations()
-        createProducts()
-        createProductMovements()
+        createLocations() # Creates sample locations
+        createProducts() # Creates sample products
