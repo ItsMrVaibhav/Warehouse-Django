@@ -12,24 +12,26 @@ Product Movement
 {% endblock %}
 
 {% block body %}
-<div class="container flex-row">
-    <div id="left-panel">
+<div class="container">
+    <div id="left-panel-options">
         {% include "core/home-sub-links.html" %}
+    </div>
+    <div id="left-panel">
         <form action="" class="form" id="productMovementForm" method="POST">
             {% csrf_token %}
             <div class="form-content">
                 <div class="form-body">
-                    <p class="form-title">Add Product Movement</p>
-                    <p class="form-sub-title">Fill the following form to add a product movement. All fields are compulsory.</p>
+                    <p class="form-title">Edit Product Movement</p>
+                    <p class="form-sub-title">Edit the following form to edit the product movement. All fields are compulsory.</p>
                     <div class="form-line"></div>
                     <div class="form-group">
                         <label for="movementID" class="form-label">Movement ID</label>
-                        <input type="text" name="movementID" class="form-input" value="{{ values.movementID }}" required placeholder="Enter the Movement ID">
+                        <input type="text" name="movementID" class="form-input form-input-disabled" disabled value="{{ movement.movement_id }}" required placeholder="Enter the Movement ID">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="fromLocation" class="form-label">From Location</label>
-                            <select name="fromLocation" class="form-input" onchange="updateProductsList(this)">
+                            <select name="fromLocation" class="form-input" id="fromLocationSelect" onchange="updateProductsList(this)">
                                 <option selected value="none">None</option>
                                 {% for location in locations %}
                                     <option value="{{ location.pk }}">{{ location.name }}</option>
@@ -39,7 +41,7 @@ Product Movement
                         <div class="form-row-gap"></div>
                         <div class="form-group">
                             <label for="toLocation" class="form-label">To Location</label>
-                            <select name="toLocation" class="form-input">
+                            <select name="toLocation" id="toLocationSelect" class="form-input">
                                 <option selected value="none">None</option>
                                 {% for location in locations %}
                                     <option value="{{ location.pk }}">{{ location.name }}</option>
@@ -69,11 +71,12 @@ Product Movement
                         <div class="form-row-gap"></div>
                         <div class="form-group">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input type="number" name="quantity" class="form-input" value="{{ values.quantity }}" required  placeholder="Enter the quantity">
+                            <input type="number" name="quantity" class="form-input" value="{{ movement.quantity }}" required  placeholder="Enter the quantity">
                         </div>
                     </div>
+                    <p class="form-message">Products list shows updated available units. They'll change once you'll save the new changes.</p>
                     {% csrf_token %}
-                    <input type="submit" value="Add Product Movement" class="btn btn-success">
+                    <input type="submit" value="Save Changes" class="btn btn-success">
                 </div>
             </div>
         </form>
@@ -84,4 +87,62 @@ Product Movement
 </div>
 {% endblock %}
 {% block bottomScripts %}
+<script>
+    function updateProductsList(element) {
+        locationsProducts.forEach(select => {
+            if (select.dataset.location === element.value) {
+                select.disabled = false;
+                select.closest(".form-group").classList.remove("hide");
+            } else {
+                select.disabled = true;
+                select.closest(".form-group").classList.add("hide");
+            }
+        });
+    }
+
+    const locationsProducts = [...document.querySelectorAll(".locations-products")];
+    const initialToLocation = "{{ toLocation }}";
+    const initialFromLocation = "{{ fromLocation }}";
+    const initialProduct = "{{ product }}";
+    const fromLocationSelect = document.getElementById("fromLocationSelect");
+    const toLocationSelect = document.getElementById("toLocationSelect");
+    let count = 0;
+
+    for (option of fromLocationSelect.options) {
+        if (option.value === initialFromLocation) {
+            fromLocationSelect.selectedIndex = count;
+            updateProductsList(fromLocationSelect)
+            break;
+        } else {
+            count++;
+        }
+    }
+
+    count = 0;
+
+    for (option of toLocationSelect.options) {
+        if (option.value === initialToLocation) {
+            toLocationSelect.selectedIndex = count;
+            break;
+        } else {
+            count++;
+        }
+    }
+
+    locationsProducts.forEach(select => {
+        if (select.dataset.location === fromLocationSelect.value) {
+            let count = 0;
+
+            for (option of select.options) {
+                if (option.value === initialProduct) {
+                    select.selectedIndex = count;
+                    break;
+                } else {
+                    count++;
+                }
+            }
+        }
+    });
+    
+</script>
 {% endblock %}

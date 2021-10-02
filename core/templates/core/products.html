@@ -12,9 +12,11 @@ Products
 {% endblock %}
 
 {% block body %}
-<div class="container flex-row">
-    <div id="left-panel">
+<div class="container">
+    <div id="left-panel-options">
         {% include "core/home-sub-links.html" with products="true" %}
+    </div>
+    <div id="left-panel">
         <div class="card">
             <div class="card-actions flex-row">
                 <button class="btn btn-success card-button w-100" onclick="addProduct(this)">Add Product</button>

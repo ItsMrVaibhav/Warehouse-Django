@@ -324,6 +324,10 @@ def productMovements(request):
                 messages.error(request, "No such product exists in the selected from location")
                 error = True
 
+        if ProductMovement.objects.filter(pk = movementID).exists():
+            messages.error(request, "Movement ID already exists! Enter a new movement ID.")
+            error = True
+
         if error:
             return render(request, "core/product-movements.html", {
                 "productMovements": ProductMovement.objects.all(),
@@ -515,13 +519,90 @@ def editProductMovement(request, pMovementID):
     """
     A view to edit an existing product movement
     """
-    pass
+    movement = ProductMovement.objects.filter(pk = pMovementID)
+
+    if not movement.exists():
+        messages.error(request, "Location doesn't exist!")
+        return HttpResponseRedirect("/locations/")
+    
+    movement = movement.first()
+
+    if request.method == "POST":
+        # Fetching form data
+        fromLocation = request.POST.get("fromLocation", None).strip()
+        toLocation = request.POST.get("toLocation", None).strip()
+        product = request.POST.get("product", None).strip()
+        quantity = int(request.POST.get("quantity", -1))
+        error = False
+
+        # Validating form data
+        if (fromLocation in [None, "none", ""] and toLocation in [None, "none", ""]) or (fromLocation == toLocation):
+            messages.error(request, "Both the locations can't be none/same")
+            error = True
+
+        if product is None or not isValid(product):
+            messages.error(request, "Invalid product")
+            error = True
+
+        if quantity is None or not isValid(quantity):
+            messages.error(request, "Invalid quantity")
+            error = True
+
+        if not Product.objects.filter(pk = product).exists():
+            messages.error(request, "Product doesn't exist!")
+            error = True
+
+        if fromLocation != "none" and not Location.objects.filter(pk = fromLocation).exists():
+            messages.error(request, "From location doesn't exist!")
+            error = True
+        
+        if toLocation != "none" and not Location.objects.filter(pk = toLocation).exists():
+            messages.error(request, "To location doesn't exist!")
+            error = True
+
+        product = Product.objects.get(pk = product)
+
+        # Checking if the quantity being transferred or moved out doesn't exceed the available amount
+        if (toLocation == "none" and fromLocation != "none") or (toLocation != "none" and fromLocation != "none"):
+            location = Location.objects.get(pk = fromLocation)
+            data = getLocationProducts(location)
+
+            if product.pk in data.keys():
+                if product == movement.product_id:
+                    if quantity > (data[product.pk]["quantity"] + movement.quantity):
+                        messages.error(request, "Quantity should not be more that the available units")
+                        error = True
+                else:
+                    if quantity > data[product.pk]["quantity"]:
+                        messages.error(request, "Quantity should not be more that the available units")
+                        error = True
+            else:
+                messages.error(request, "No such product exists in the selected from location")
+                error = True
+
+        if not error:
+            movement.from_location = None if fromLocation == "none" else Location.objects.get(pk = fromLocation)
+            movement.to_location = None if toLocation == "none" else  Location.objects.get(pk = toLocation)
+            movement.product_id = product
+            movement.quantity = quantity
+            movement.type = getProductMovementType(toLocation, fromLocation)
+            messages.success(request, "Product Movement updated successfully!")
+            movement.save()
+
+    return render(request, "core/edit-product-movement.html", {
+        "movement": movement,
+        "toLocation": movement.to_location.pk if movement.to_location else "none",
+        "fromLocation": movement.from_location.pk if movement.from_location else "none",
+        "product": movement.product_id.pk,
+        "locations": Location.objects.all(),
+        "products": Product.objects.all(),
+        "data": getAllLocationsProducts()
+    })
 
 def viewProductMovement(request, pMovementID):
     """
     A view to view an existing product movement
     """
-
     movement = ProductMovement.objects.filter(pk = pMovementID)
 
     if not movement.exists():

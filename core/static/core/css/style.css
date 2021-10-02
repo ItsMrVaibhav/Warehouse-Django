@@ -465,6 +465,14 @@ textarea {
     border-bottom: 1px solid var(--primaryColour);
 }
 
+.form-message {
+    padding: 10px;
+    background-color: var(--primaryColour);
+    color: #FFFFFF;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
 .form-input-help {
     margin-top: -10px;
     font-size: 12px;
@@ -650,7 +658,6 @@ nav {
     align-items: center;
     justify-content: space-between;
     padding: 5px 0px;
-    background-color: #FF0000;
 }
 
 #navigation-bar-logo {
@@ -667,11 +674,23 @@ nav {
 
 /* Left Panel */
 
+#left-panel-options {
+    max-width: 1000px;
+    margin: auto;
+    width: 100%;
+}
+
 #left-panel {
-    width: 75%;    
-    height: calc(100vh - var(--navBarSize) - 15px);
+    max-width: 1000px;
+    margin: auto;
+    width: 100%;
+    height: calc(100vh - 53px);
     overflow: auto;
-    padding-right: 25px;
+}
+
+#left-panel::-webkit-scrollbar {
+    height: 0px;
+    width: 0px;
 }
 
 .sub-links {
@@ -700,7 +719,8 @@ nav {
 /* Right Panel */
 
 #right-panel {
-    width: 25%;
+    display: none;
+    width: 0%;
     background-color: royalblue;
     height: calc(100vh - var(--navBarSize) - 15px);
     overflow: auto;

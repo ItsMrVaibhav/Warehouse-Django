@@ -12,9 +12,11 @@ Product Movement
 {% endblock %}
 
 {% block body %}
-<div class="container flex-row">
-    <div id="left-panel">
+<div class="container">
+    <div id="left-panel-options">
         {% include "core/home-sub-links.html" %}
+    </div>
+    <div id="left-panel">
         <div class="card">
             <div class="card-body">
                 <div class="card-metrics">
@@ -45,6 +47,14 @@ Product Movement
                 {% else %}
                     <p class="card-text">None</p>
                 {% endif %}
+                <div class="line"></div>
+                <div class="card-actions">
+                    <a href="{% url 'core:editProductMovement' movement.pk %}" class="btn btn-info card-button w-100">Edit</a>
+                    <form action="{% url 'core:deleteProductMovement' movement.pk %}" class="w-100 me-5" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" class="btn card-button btn-danger w-100">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -12,9 +12,11 @@ Home
 {% endblock %}
 
 {% block body %}
-<div class="container flex-row">
-    <div id="left-panel">
+<div class="container">
+    <div id="left-panel-options">
         {% include "core/home-sub-links.html" with index="true" %}
+    </div>
+    <div id="left-panel">
         <div class="table">
             <p class="table-title">Locations and Products Balance</p>
             <p class="table-sub-title">Following is the list of locations and their products</p>

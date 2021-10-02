@@ -27,21 +27,6 @@
             {% endif %}
         </div>
     </div>
-    <div class="container">
-        <nav>
-            <div id="navigation-bar-logo-space">
-                <a href="/">
-                    <img id="navigation-bar-logo" src="{% static 'core/images/logo.png' %}" alt="">
-                </a>
-            </div>
-            <div id="navigation-bar-links">
-                <a href="{% url 'core:index' %}" class="navigation-bar-link">Home</a>
-            </div>
-            <div id="navigation-bar-theme-switcher-space">
-                <button id="navigation-bar-theme-switcher">Switch</button>
-            </div>
-        </nav>
-    </div>
     {% block body %}{% endblock %}
 </body>
 {% block bottomScripts %}{% endblock %}

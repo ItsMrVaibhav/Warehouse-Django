@@ -12,9 +12,11 @@
 {% endblock %}
 
 {% block body %}
-<div class="container flex-row">
-    <div id="left-panel">
+<div class="container">
+    <div id="left-panel-options">
         {% include "core/home-sub-links.html" %}
+    </div>
+    <div id="left-panel">
         <form action="" class="form" id="locationForm" method="POST">
             {% csrf_token %}
             <div class="form-content">
